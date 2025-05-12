@@ -1,8 +1,9 @@
 import feedparser
 import concurrent.futures
 import logging
+import time
 
-# Implemtation des logs
+# Implémentation des logs
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 # Chargement des flux RSS
@@ -37,7 +38,7 @@ def analyser_flux(url, mots_cles):
             contenu = f"{titre} {description}".lower()
             for mot in mots_cles:
                 if mot in contenu:
-                    logging.info(f"J'ai trouvé le mot: '{mot}' dans cette article : {titre}")
+                    logging.info(f"J'ai trouvé le mot: '{mot}' dans cet article : {titre}")
                     resultats.append({
                         "titre": titre,
                         "date": date,
@@ -51,6 +52,7 @@ def analyser_flux(url, mots_cles):
 
 # Fonction principale
 def main():
+    start_time = time.time()
     rss_list = charger_flux("rss_list.txt")
     mots_cles = charger_mots_cles("mots_cles.txt")
     tous_les_resultats = []
@@ -66,6 +68,11 @@ def main():
             ligne = f"{res['titre']} | {res['date']} | {res['url']} | Mot-clé : {res['mot_cle']}"
             print(ligne)
             f.write(ligne + "\n")
+
+    end_time = time.time()
+    execution_time = end_time - start_time
+    logging.info(f"Temps d'exécution : {execution_time:.2f} secondes")
+    logging.info(f"Nombre total de résultats : {len(tous_les_resultats)}")
 
 if __name__ == "__main__":
     main()
