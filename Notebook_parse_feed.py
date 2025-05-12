@@ -13,3 +13,22 @@ def charger_flux(path):
     except FileNotFoundError:
         logging.error(f"Fichier non trouvé : {path}")
         return []
+
+# Chargement des mots-clés
+def charger_mots_cles(path):
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            return [mot.strip().lower() for mot in f if mot.strip()]
+    except FileNotFoundError:
+        logging.error(f"Fichier non trouvé : {path}")
+        return []
+
+# Fonction principale
+def main():
+    rss_list = charger_flux("rss_list.txt")
+    mots_cles = charger_mots_cles("mots_cles.txt")
+    tous_les_resultats = []
+
+
+if __name__ == "__main__":
+    main()
