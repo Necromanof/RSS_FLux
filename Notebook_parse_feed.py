@@ -57,7 +57,7 @@ def main():
     mots_cles = charger_mots_cles("mots_cles.txt")
     tous_les_resultats = []
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
         futures = {executor.submit(analyser_flux, url, mots_cles): url for url in rss_list}
         for future in concurrent.futures.as_completed(futures):
             resultats = future.result()
