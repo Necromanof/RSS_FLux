@@ -61,6 +61,11 @@ def main():
             resultats = future.result()
             tous_les_resultats.extend(resultats)
 
+    with open("resultat.txt", "w", encoding="utf-8") as f:
+        for res in tous_les_resultats:
+            ligne = f"{res['titre']} | {res['date']} | {res['url']} | Mot-clé : {res['mot_cle']}"
+            print(ligne)
+            f.write(ligne + "\n")
 
 if __name__ == "__main__":
     main()
